@@ -1,4 +1,38 @@
-namespace View
+using GerenciamentoDeAcessos.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+
+namespace GerenciamentoDeAcessos.Controllers
+{
+    public class UsuarioController : Controller
+    {
+        private readonly Contexto _contexto;
+
+        public UsuarioController(Contexto contexto)
+        {
+            _contexto = contexto;
+        }
+
+        public IActionResult Index()
+        {
+            var usuarios = _contexto.Usuarios.ToList();
+            return View(usuarios);
+        }
+
+        public IActionResult Detalhes(int id)
+        {
+            var usuario = _contexto.Usuarios.FirstOrDefault(u => u.Id == id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            return View(usuario);
+        }
+
+
+
+/*namespace View
 {
     public class Usuario
     {
@@ -21,7 +55,7 @@ namespace View
            };
            _usuario.Add(usuario);
 
-           Console.WriteLine("Usuário Criado com Sucesso.")
+           Console.WriteLine("Usuário Criado com Sucesso.");
         }
     }
 
@@ -34,7 +68,7 @@ namespace View
         Usuario usuario = usuario.FristOrDefaut(u => u,Id == Id);
         if (Usuario == null)
         {
-            Console.WriteLine("Usuário não encontrado.")
+            Console.WriteLine("Usuário não encontrado.");
             return;
         }
         Console.WriteLine("Nome (atual: {0}:) ", usuario.Nome);
@@ -47,7 +81,7 @@ namespace View
         usuario.Email = email;
         usuario.Senha = senha;
 
-        Console.WriteLine("Usuário alterado com sucesso!")
+        Console.WriteLine("Usuário alterado com sucesso!");
     }
 
     private void ExcluirUsuario()
@@ -83,4 +117,4 @@ namespace View
             Console.WriteLine();
         }
     }
-}
+}*/
